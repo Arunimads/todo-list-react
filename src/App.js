@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
+  const [allTodos, setAllTodos] = useState([]);
   const fetchTodos = async () => {
-    const fetchedTodos = await axios.get("https://jsonplaceholder.typicode.com/todos");
+    const fetchedTodos = await axios.get(
+      "https://jsonplaceholder.typicode.com/todos"
+    );
     const tododata = fetchedTodos.data;
     console.log(tododata);
     setTodos(tododata);
+    setAllTodos(tododata);
   };
   useEffect(() => {
     fetchTodos();
@@ -15,15 +19,27 @@ const App = () => {
 
   const handleOnChange = (e) => {
     console.log(e.target.value);
-    if (e.target.value === "Pending") {
-      const pendingTodos = todos.filter((todo) => todo.completed === false);
-      console.log(pendingTodos);
-      setTodos(pendingTodos)
+    const filterName = e.target.value;
+    switch (filterName) {
+      case "Pending":
+        const pendingTodos = allTodos.filter(
+          (todo) => todo.completed === false
+        );
+        console.log(pendingTodos);
+        setTodos(pendingTodos);
+
+        break;
+      case "Completed":
+        const completedTodos = allTodos.filter(
+          (todo) => todo.completed === true
+        );
+        setTodos(completedTodos);
+        break;
+      default:
+        setTodos(allTodos);
+        break;
     }
-    else{
-      const completedTodos= todos.filter((todo)=>todo.completed===true);
-      setTodos(completedTodos)
-    }
+    
   };
 
   return (
