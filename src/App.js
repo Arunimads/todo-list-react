@@ -39,7 +39,7 @@ const App = () => {
   };
 
   const handleOrderClick = (e) => {
-                // Pro level code 
+    // Pro level code
     // let order;
     // if (id === "Ascending") {
     //   order = [...todos].sort((a, b) => a.title.localeCompare(b.title));
@@ -56,10 +56,15 @@ const App = () => {
       const decend = [...todos].sort((a, b) => b.title.localeCompare(a.title));
       setTodos(decend);
     }
-
-    // console.log(id);
   };
-  
+
+  const handleDelete = (e) => {
+    const todoDelete = e.target.value;
+    const todoDeleted = todos.filter(
+      (todo) => parseInt(todo.id) !== parseInt(todoDelete)
+    );
+    setTodos(todoDeleted);
+  };
 
   return (
     <>
@@ -102,7 +107,9 @@ const App = () => {
                 style={{ color: todo.completed ? "green" : "red" }}
               >
                 {todo.title}
-                <button>Delete</button>
+                <button value={todo.id} onClick={handleDelete}>
+                  Delete
+                </button>
               </li>
             ))}
         </ol>
