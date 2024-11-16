@@ -37,10 +37,29 @@ const App = () => {
         break;
     }
   };
-  const handleClick = () => {
-    console.log(todos.sort((a, b) => a.title.localeCompare(b.title)));
-    console.log("clicked");
+
+  const handleOrderClick = (e) => {
+                // Pro level code 
+    // let order;
+    // if (id === "Ascending") {
+    //   order = [...todos].sort((a, b) => a.title.localeCompare(b.title));
+    // } else {
+    //   order = [...todos].sort((a, b) => b.title.localeCompare(a.title));
+    // }
+    // setTodos(order);
+
+    const id = e.target.id;
+    if (id === "Ascending") {
+      const ascend = [...todos].sort((a, b) => a.title.localeCompare(b.title));
+      setTodos(ascend);
+    } else {
+      const decend = [...todos].sort((a, b) => b.title.localeCompare(a.title));
+      setTodos(decend);
+    }
+
+    // console.log(id);
   };
+  
 
   return (
     <>
@@ -54,14 +73,20 @@ const App = () => {
         <option>Pending</option>
         <option>Completed</option>
       </select>
-      <input type="radio" name="order" id="Ascending" />
-      <label for="Ascending" onClick={handleClick}>
-        Ascending
-      </label>
-      <input type="radio" name="order" id="Descending" />
-      <label for="Descending" onClick={handleClick}>
-        Descending
-      </label>
+      <input
+        type="radio"
+        name="order"
+        id="Ascending"
+        onClick={handleOrderClick}
+      />
+      <label for="Ascending">Ascending</label>
+      <input
+        type="radio"
+        name="order"
+        id="Descending"
+        onClick={handleOrderClick}
+      />
+      <label for="Descending">Descending</label>
       <div
         style={{
           height: "400px",
@@ -77,6 +102,7 @@ const App = () => {
                 style={{ color: todo.completed ? "green" : "red" }}
               >
                 {todo.title}
+                <button>Delete</button>
               </li>
             ))}
         </ol>
